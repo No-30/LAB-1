@@ -17,6 +17,7 @@ nrfx_uarte_t instance = NRFX_UARTE_INSTANCE(0);
 //skapar en buffer att ta emot tecken vi läser över UARTE
 char uarte_buffer;
 int num;
+char sendBuffer[charArrLength];
 
 void read_string(char charArr[])
 {
@@ -36,9 +37,16 @@ void read_string(char charArr[])
     }
         nrfx_uarte_tx(&instance, charArr, length, 0);
 }
-int read_int(char charArr[]){
+int read_int(char charArr[])
+{
     read_string(charArr);
     return atoi(charArr);
+    //return 10;
+}
+
+void send_int()
+{
+    sprintf(sendBuffer, "%d", num);
 }
 
 int main(void)
@@ -53,13 +61,18 @@ int main(void)
         //Här kan vi implementera felhantering, men för stunden håller vi tummarna att allt funkar
     }
 
-    char msg1[] = " \n\r Skriv tecken och tryck sedan enter \n\r";
+    char msg1[] = " \n\r 1.1 Skriv tecken och tryck sedan enter \n\r";
     nrfx_uarte_tx(&instance, msg1, sizeof(msg1), 0);
 
     read_string(charArr);
-    char msg2[] = " \n\r atoi \n\r";
+    char msg2[] = " \n\r 1.2 atoi \n\r";
     nrfx_uarte_tx(&instance, msg2, sizeof(msg2), 0);
     num = read_int(charArr);
-    nrfx_uarte_tx(&instance, num, sizeof(num), 0);
+    num++;
+    
+    char msg3[] = " \n\r 1.3 sprintf \n\r";
+    nrfx_uarte_tx(&instance, msg3, sizeof(msg3), 0);
+    send_int();
+    nrfx_uarte_tx(&instance, sendBuffer, sizeof(sendBuffer), 0);
 
 }
