@@ -3,18 +3,20 @@
 #include <nrfx_config.h>
 #include <nrf.h>
 #include <nrfx_uarte.h>
+#include <stdlib.h>
 
 
 //definierar vilka pinnar som ska användas för att skicka och ta emot data:
 #define PIN_TXD 20
 #define PIN_RXD 22
+#define charArrLength 100
 
 //Skapar en driver instance för UARTE:
 nrfx_uarte_t instance = NRFX_UARTE_INSTANCE(0);
 
 //skapar en buffer att ta emot tecken vi läser över UARTE
 char uarte_buffer;
-#define charArrLength 100
+int num;
 
 void read_string(char charArr[])
 {
@@ -34,6 +36,10 @@ void read_string(char charArr[])
     }
         nrfx_uarte_tx(&instance, charArr, length, 0);
 }
+int read_int(char charArr[]){
+    read_string(charArr);
+    return atoi(charArr);
+}
 
 int main(void)
 { 
@@ -51,4 +57,9 @@ int main(void)
     nrfx_uarte_tx(&instance, msg1, sizeof(msg1), 0);
 
     read_string(charArr);
+    char msg2[] = " \n\r atoi \n\r";
+    nrfx_uarte_tx(&instance, msg2, sizeof(msg2), 0);
+    num = read_int(charArr);
+    nrfx_uarte_tx(&instance, num, sizeof(num), 0);
+
 }
