@@ -1162,7 +1162,7 @@
  * Boolean. Accepted values 0 and 1.
  */
 #ifndef NRFX_SYSTICK_ENABLED
-#define NRFX_SYSTICK_ENABLED 0
+#define NRFX_SYSTICK_ENABLED 1
 #endif
 
 /**

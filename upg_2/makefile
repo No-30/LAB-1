@@ -21,6 +21,7 @@ SRC_FILES        += $(PROJ)/mdk/system_nrf5340_application.c
 SRC_FILES        += $(PROJ)/drivers/src/nrfx_uarte.c
 SRC_FILES        += main.c
 # Här kan ni länka till extra source filer ni vill använda.
+SRC_FILES		 += $(PROJ)/drivers/src/nrfx_systick.c
 # SRC_FILES        += inte_en_riktigt_fil.c
 # Definera folders
 SRC_DIRS         := $(dir $(SRC_FILES))
