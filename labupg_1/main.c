@@ -36,6 +36,8 @@ const nrfx_rtc_t rtc_instance = NRFX_RTC_INSTANCE(0);
 void rng(int amount, int delay)
 {
     int rngNum;
+    //rtcTime = nrfx_rtc_counter_get(&rtc_instance);
+    //srand(rtcTime);
     for(int i = 0; i < amount; i++)
     {
         rngNum = rand() % 4;
@@ -95,7 +97,8 @@ int main(void)
             nrf_gpio_pin_write(LEDArr[i], LEDOFF);
     }
 
-    while(nrf_gpio_pin_read(BUTTON1))
+    int whileloop = 1;
+    while(whileloop)
     {
         if(!nrf_gpio_pin_read(BUTTON1))
         {
@@ -104,9 +107,10 @@ int main(void)
             while(!nrf_gpio_pin_read(BUTTON1))
             {
                 nrfx_systick_delay_ms(50);
+                whileloop = 0;
             }
-            nrfx_systick_delay_ms(50);
         }
+        nrfx_systick_delay_ms(50);
     }
         sprintf(sprintfBuffer, "\n\r Skriv in amount \n\r");
         nrfx_uarte_tx(&instance, sprintfBuffer, strlen(sprintfBuffer), 0);
