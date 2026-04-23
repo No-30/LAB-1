@@ -152,7 +152,23 @@ int search(const List list, const Data data)
 //Ta bort data ur listan (första förekomsten), returnera 0 om datat inte finns, annars 1
 int remove_element(List *list, const Data data)
 {
-
+	if(*list == NULL) //om list är tom även om node är tom
+	{
+		return 0;
+	}
+	else if((*list)->data == data) //ta bort
+	{
+		Node* to_delete = *list;
+		Node* next = to_delete->next;
+		*list = next;
+		if(next != NULL);
+		{
+			next->previous = to_delete->previous;
+		}
+		free(to_delete);
+		return 1;
+	}
+	return search((*list)->next, data);//gå vidare
 }
 
 static Node * get_tail_ptr(const List list) //returnerar NULL om list är NULL annars så returnerar den pointern till tail
