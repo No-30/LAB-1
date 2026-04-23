@@ -128,22 +128,25 @@ Data get_last_element(const List list) //TODO: assert istället för if-statemen
 //Returnera hur många noder som finns i listan
 int number_of_nodes(const List list)
 {
-	if(list == NULL) //om list är tom
+	if(list == NULL) //om list är tom även om node är tom
 	{
 		return 0;
 	}
 	return 1 + number_of_nodes(list->next);
 }
 
-static int count_number_of_nodes(const List list)
-{
-
-}
-
 //Sök efter data i listan, returnera 1 om datat finns, annars 0.
 int search(const List list, const Data data)
 {
-	
+	if(list == NULL) //om list är tom även om node är tom
+	{
+		return 0;
+	}
+	else if(list->data == data) //finns datan
+	{
+		return 1;
+	}
+	return search(list->next, data);//gå vidare
 }
 
 //Ta bort data ur listan (första förekomsten), returnera 0 om datat inte finns, annars 1
@@ -154,7 +157,7 @@ int remove_element(List *list, const Data data)
 
 static Node * get_tail_ptr(const List list) //returnerar NULL om list är NULL annars så returnerar den pointern till tail
 {
-	if(list == NULL) //om list är tom
+	if(list == NULL) //om list är tom även om node är tom
 	{
 		return NULL;
 	}
