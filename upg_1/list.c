@@ -15,7 +15,11 @@ List create_empty_list(void)
 static Node * create_list_node(const Data data)
 {
 	//glöm inte att kolla så att malloc inte returnerade NULL
+	Node *node_ptr = malloc(sizeof(Node));
 
+	node_ptr->data = data;
+
+	return node_ptr;
 }
 
 //Är listan tom?
@@ -35,13 +39,31 @@ int is_empty(const List list)
 //Lägg till en nod först i listan
 void add_first(List *list, const Data data)
 {
+	Node *node_ptr = create_list_node(data);
+	
+	node_ptr->next = *list;
+	node_ptr->previous = NULL;	
 
+	if(*list != NULL)
+	{
+		(*list)->previous = node_ptr;
+	}
+
+	*list = node_ptr;
 }
 
 //lägg till nod sist i listan
 void add_last(List *list, const Data data)
 {
+	Node *node_ptr = create_empty_list(data);
 
+	node_ptr->previous = *list;
+	node_ptr->next = NULL;
+
+	if(*list != NULL)
+	{
+		(*list)->next = NULL;
+	}
 }
 
 //Ta bort första noden i listan
@@ -101,4 +123,20 @@ int search(const List list, const Data data)
 int remove_element(List *list, const Data data)
 {
 
+}
+
+Node * get_tail_ptr(List list)
+{
+	if(list == NULL)
+	{
+		return NULL;
+	}
+	else if(list->next)
+	{
+		return list;
+	}
+	else
+	{
+		return get_tail_ptr(list->next);
+	}
 }

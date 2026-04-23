@@ -19,7 +19,7 @@ typedef int Data;
 /* dubbellänkad lista.                                 */
 /*******************************************************/
 
-/*
+
 //struktdefinition för dubbellänkad lista
 typedef struct node
 {
@@ -27,7 +27,7 @@ typedef struct node
 	struct node* next;
 	struct node* previous;
 }Node;
-*/
+
 
 /*
 //struktdefinition för enkellänkad lista
@@ -81,6 +81,5 @@ int search(const List list, const Data data);
 
 //Ta bort data ur listan (första förekomsten), returnera 0 om datat inte finns, annars 1
 int remove_element(List *list, const Data data);
-
 
 #endif

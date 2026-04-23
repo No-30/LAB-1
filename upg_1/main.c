@@ -8,7 +8,6 @@
 #include <nrfx_systick.h>
 #include <nrf_gpio.h>
 #include <stdHeader.h>
-#include "list.c"
 #include "list.h"
 
 int main(void)
