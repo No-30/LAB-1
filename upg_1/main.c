@@ -13,4 +13,5 @@
 int main(void)
 { 
     List head = create_empty_list();  //Kom ihåg att head alltid ska peka på det första elementet i lista
+    initUART();
 }

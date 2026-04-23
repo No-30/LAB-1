@@ -1,7 +1,6 @@
 #include "list.h"
 #include <stdlib.h>
-
-
+#include <stdHeader.h>
 
 //Returnera en tom lista - funktionen är färdig
 List create_empty_list(void)
@@ -16,8 +15,12 @@ static Node * create_list_node(const Data data)
 {
 	//glöm inte att kolla så att malloc inte returnerade NULL
 	Node *node_ptr = malloc(sizeof(Node));
+	if(node_ptr == NULL)
+		return NULL;
 
 	node_ptr->data = data;
+	node_ptr->next = NULL;
+	node_ptr->previous = NULL;
 
 	return node_ptr;
 }
@@ -38,6 +41,8 @@ int is_empty(const List list)
 void add_first(List *list, const Data data)
 {
 	Node *node_ptr = create_list_node(data);
+	if (node_ptr == NULL)
+		return; //minne slut
 	
 	node_ptr->next = *list;
 	node_ptr->previous = NULL;	
@@ -53,6 +58,8 @@ void add_first(List *list, const Data data)
 void add_last(List *list, const Data data)
 {
 	Node *node_ptr = create_list_node(data);
+	if (node_ptr == NULL)
+		return; //minne slut
 
     if (*list == NULL)
     {
@@ -73,7 +80,18 @@ void add_last(List *list, const Data data)
 //precondition: listan är inte tom (testa med assert)
 void remove_first(List *list)
 {
+	if (*list == NULL)
+        return;
 
+    Node *to_delete = *list;
+	Node *next = to_delete->next;
+
+	*list = next;
+
+	if(next != NULL)
+		next->previous = NULL;
+
+    free(to_delete);
 }
 
 //ta bort sista noden i listan
@@ -182,10 +200,12 @@ int remove_element(List *list, const Data data)
         if (next != NULL)
             next->previous = to_delete->previous;
 
+		if (to_delete->previous != NULL)
+    		to_delete->previous->next = next;
+
         free(to_delete);
         return 1;
     }
-
     return remove_element(&(*list)->next, data);//gå vidare rekursivt
 }
 
@@ -199,5 +219,4 @@ static Node * get_tail_ptr(const List list) //returnerar NULL om list är NULL a
 	
 	else //om inte sista fortsätt till nästa
 		return get_tail_ptr(list->next);
-	
 }
