@@ -138,7 +138,14 @@ void clear_list(List *list)
 //Skriv ut listan genom UART
 void print_list(const List list)
 {
-
+	char sprintfBuffer[100];
+	if(list == NULL)
+		return;
+	
+	sprintf(sprintfBuffer, "\n\r%d", list->data);
+	uarte_write(sprintfBuffer);	
+		
+	print_list(list->next);
 }
 
 //returnera första datat i listan
@@ -195,13 +202,8 @@ int remove_element(List *list, const Data data)
         Node *to_delete = *list;
         Node *next = to_delete->next;
 
-        *list = next;
-
-        if (next != NULL)
-            next->previous = to_delete->previous;
-
-		if (to_delete->previous != NULL)
-    		to_delete->previous->next = next;
+        if(*list != NULL)
+			(*list)->previous = NULL;
 
         free(to_delete);
         return 1;
