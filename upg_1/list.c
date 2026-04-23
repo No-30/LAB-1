@@ -27,13 +27,11 @@ static Node * create_list_node(const Data data)
 int is_empty(const List list)
 {
 	if(list == NULL)
-	{
 		return 1;
-	}
+	
 	else
-	{
 		return 0;
-	}
+	
 }
 
 //Lägg till en nod först i listan
@@ -45,9 +43,8 @@ void add_first(List *list, const Data data)
 	node_ptr->previous = NULL;	
 
 	if(*list != NULL)
-	{
 		(*list)->previous = node_ptr;
-	}
+	
 
 	*list = node_ptr;
 }
@@ -55,22 +52,21 @@ void add_first(List *list, const Data data)
 //lägg till nod sist i listan
 void add_last(List *list, const Data data)
 {
-	Node *node_ptr = create_list_list(data);
+	Node *node_ptr = create_list_node(data);
 
-	struct node* previous = get_tail_ptr(list);
+    if (*list == NULL)
+    {
+        node_ptr->next = NULL;
+        node_ptr->previous = NULL;
+        *list = node_ptr;
+        return;
+    }
 
-	if(previous == NULL)
-	{
-		//fault
-	}
+    Node *tail = get_tail_ptr(*list);
 
-	node_ptr->previous = previous; 
-	node_ptr->next = NULL;
-
-	if(*list != NULL)
-	{
-		(*list)->next = NULL;
-	}
+    tail->next = node_ptr;
+    node_ptr->previous = tail;
+    node_ptr->next = NULL;
 }
 
 //Ta bort första noden i listan
@@ -84,7 +80,23 @@ void remove_first(List *list)
 //precondition: listan är inte tom (testa med assert)
 void remove_last(List *list)
 {
+	if (*list == NULL)
+        return;
 
+    Node *tail = get_tail_ptr(*list);
+
+    // Om det bara finns en nod
+    if (tail->previous == NULL)
+    {
+        free(tail);
+        *list = NULL;
+        return;
+    }
+
+    Node *prev = tail->previous;
+    prev->next = NULL;
+
+    free(tail);
 }
 
 //töm listan (ta bort alla noder ur listan)
@@ -92,6 +104,17 @@ void remove_last(List *list)
 void clear_list(List *list)
 {
 	//alla noder ska frigöras
+	Node *current = *list;
+    Node *next;
+
+    while (current != NULL)
+    {
+        next = current->next;
+        free(current);
+        current = next;
+    }
+
+    *list = NULL;
 }
 
 //Skriv ut listan genom UART
@@ -105,9 +128,8 @@ void print_list(const List list)
 Data get_first_element(const List list) //TODO: assert istället för if-statement
 {
 	if (list == NULL)
-	{
 		return NULL;
-	}
+	
 	return list->data;
 }
 
@@ -117,11 +139,9 @@ Data get_last_element(const List list) //TODO: assert istället för if-statemen
 {
 	struct node* tail = get_tail_ptr(list);
 
-	if(tail == NULL)
-	{
-		//fault
+	if(tail == NULL)//fault
 		return NULL;
-	}
+	
 	return tail->data;
 }
 
@@ -129,9 +149,8 @@ Data get_last_element(const List list) //TODO: assert istället för if-statemen
 int number_of_nodes(const List list)
 {
 	if(list == NULL) //om list är tom även om node är tom
-	{
 		return 0;
-	}
+	
 	return 1 + number_of_nodes(list->next);
 }
 
@@ -139,50 +158,46 @@ int number_of_nodes(const List list)
 int search(const List list, const Data data)
 {
 	if(list == NULL) //om list är tom även om node är tom
-	{
 		return 0;
-	}
+	
 	else if(list->data == data) //finns datan
-	{
 		return 1;
-	}
+	
 	return search(list->next, data);//gå vidare
 }
 
 //Ta bort data ur listan (första förekomsten), returnera 0 om datat inte finns, annars 1
 int remove_element(List *list, const Data data)
 {
-	if(*list == NULL) //om list är tom även om node är tom
-	{
-		return 0;
-	}
-	else if((*list)->data == data) //ta bort
-	{
-		Node* to_delete = *list;
-		Node* next = to_delete->next;
-		*list = next;
-		if(next != NULL);
-		{
-			next->previous = to_delete->previous;
-		}
-		free(to_delete);
-		return 1;
-	}
-	return search((*list)->next, data);//gå vidare
+	if (*list == NULL)//om list är tom även om node är tom
+        return 0;
+
+    if ((*list)->data == data)//ta bort
+    {
+        Node *to_delete = *list;
+        Node *next = to_delete->next;
+
+        *list = next;
+
+        if (next != NULL)
+            next->previous = to_delete->previous;
+
+        free(to_delete);
+        return 1;
+    }
+
+    return remove_element(&(*list)->next, data);//gå vidare rekursivt
 }
 
 static Node * get_tail_ptr(const List list) //returnerar NULL om list är NULL annars så returnerar den pointern till tail
 {
 	if(list == NULL) //om list är tom även om node är tom
-	{
 		return NULL;
-	}
+
 	else if(list->next == NULL) //om det är tail returnera
-	{
 		return list;
-	}
+	
 	else //om inte sista fortsätt till nästa
-	{
 		return get_tail_ptr(list->next);
-	}
+	
 }
