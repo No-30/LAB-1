@@ -55,9 +55,16 @@ void add_first(List *list, const Data data)
 //lägg till nod sist i listan
 void add_last(List *list, const Data data)
 {
-	Node *node_ptr = create_empty_list(data);
+	Node *node_ptr = create_list_list(data);
 
-	node_ptr->previous = *list;
+	struct node* previous = get_tail_ptr(list);
+
+	if(previous == NULL)
+	{
+		//fault
+	}
+
+	node_ptr->previous = previous; 
 	node_ptr->next = NULL;
 
 	if(*list != NULL)
@@ -95,16 +102,27 @@ void print_list(const List list)
 
 //returnera första datat i listan
 //precondition: listan är inte tom (testa med assert)
-Data get_first_element(const List list)
+Data get_first_element(const List list) //TODO: assert istället för if-statement
 {
-
+	if (list == NULL)
+	{
+		return NULL;
+	}
+	return list->data;
 }
 
 //returnera sista datat i listan. 
 //precondition: listan är inte tom (testa med assert)
-Data get_last_element(const List list)
+Data get_last_element(const List list) //TODO: assert istället för if-statement
 {
+	struct node* tail = get_tail_ptr(list);
 
+	if(tail == NULL)
+	{
+		//fault
+		return NULL;
+	}
+	return tail->data;
 }
 
 //Returnera hur många noder som finns i listan
@@ -125,17 +143,17 @@ int remove_element(List *list, const Data data)
 
 }
 
-Node * get_tail_ptr(List list)
+static Node * get_tail_ptr(List list) //returnerar NULL om list är NULL annars så returnerar den pointern till tail
 {
-	if(list == NULL)
+	if(list == NULL) //om list är tom
 	{
 		return NULL;
 	}
-	else if(list->next)
+	else if(list->next == NULL) //om det är tail returnera
 	{
 		return list;
 	}
-	else
+	else //om inte sista fortsätt till nästa
 	{
 		return get_tail_ptr(list->next);
 	}
