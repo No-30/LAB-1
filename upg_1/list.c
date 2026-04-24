@@ -25,6 +25,18 @@ static Node * create_list_node(const Data data)
 	return node_ptr;
 }
 
+static Node * get_tail_ptr(const List list) //returnerar NULL om list är NULL annars så returnerar den pointern till tail
+{
+	if(list == NULL) //om list är tom även om node är tom
+		return NULL;
+
+	else if(list->next == NULL) //om det är tail returnera
+		return list;
+	
+	else //om inte sista fortsätt till nästa
+		return get_tail_ptr(list->next);
+}
+
 //Är listan tom?
 //Returnerar 1 om listan är tom, annars 0
 int is_empty(const List list)
@@ -209,16 +221,4 @@ int remove_element(List *list, const Data data)
         return 1;
     }
     return remove_element(&(*list)->next, data);//gå vidare rekursivt
-}
-
-static Node * get_tail_ptr(const List list) //returnerar NULL om list är NULL annars så returnerar den pointern till tail
-{
-	if(list == NULL) //om list är tom även om node är tom
-		return NULL;
-
-	else if(list->next == NULL) //om det är tail returnera
-		return list;
-	
-	else //om inte sista fortsätt till nästa
-		return get_tail_ptr(list->next);
 }
