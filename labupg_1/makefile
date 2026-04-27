@@ -23,8 +23,9 @@ SRC_FILES        += main.c
 # Här kan ni länka till extra source filer ni vill använda.
 SRC_FILES		 += $(PROJ)/drivers/src/nrfx_systick.c
 SRC_FILES		 += $(PROJ)/drivers/src/nrfx_rtc.c
-SRC_FILES		 += $(PROJ)/std/stdFunc.c
-SRC_FILES		 += $(PROJ)/std/list.c
+SRC_FILES		 += $(PROJ)/src/labupg_1/list.c
+#SRC_FILES		 += $(PROJ)/std/stdFunc.c
+#SRC_FILES		 += $(PROJ)/std/list.c
 # SRC_FILES        += inte_en_riktigt_fil.c
 # Definera folders
 SRC_DIRS         := $(dir $(SRC_FILES))
@@ -42,7 +43,7 @@ INC_FOLDERS      += $(PROJ)/drivers/prs
 INC_FOLDERS      += $(PROJ)/CMSIS/Core/Include
 INC_FOLDERS      += $(PROJ)/mdk
 INC_FOLDERS      += $(PROJ)/src
-INC_FOLDERS      += $(PROJ)/std #Våran egen mapp med en header och c-filer
+#INC_FOLDERS      += $(PROJ)/std #Våran egen mapp med en header och c-filer
 INC_FOLDERS      += $(CURDIR)
 INC_FOLDERS      += $(PROJ)
 INC_FOLDERS      += $(PROJ)/helpers
