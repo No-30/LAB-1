@@ -42,6 +42,7 @@ INC_FOLDERS      += $(PROJ)/drivers/prs
 INC_FOLDERS      += $(PROJ)/CMSIS/Core/Include
 INC_FOLDERS      += $(PROJ)/mdk
 INC_FOLDERS      += $(PROJ)/src
+INC_FOLDERS      += $(PROJ)/std
 INC_FOLDERS      += $(CURDIR)
 INC_FOLDERS      += $(PROJ)
 INC_FOLDERS      += $(PROJ)/helpers

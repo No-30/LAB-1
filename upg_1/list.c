@@ -1,6 +1,7 @@
 #include "list.h"
 #include <stdlib.h>
 #include <stdHeader.h>
+#include <assert.h>
 
 //Returnera en tom lista - funktionen är färdig
 List create_empty_list(void)
@@ -27,10 +28,9 @@ static Node * create_list_node(const Data data)
 
 static Node * get_tail_ptr(const List list) //returnerar NULL om list är NULL annars så returnerar den pointern till tail
 {
-	if(list == NULL) //om list är tom även om node är tom
-		return NULL;
+	assert(list != NULL);//om list är tom även om node är tom
 
-	else if(list->next == NULL) //om det är tail returnera
+	if(list->next == NULL) //om det är tail returnera
 		return list;
 	
 	else //om inte sista fortsätt till nästa
