@@ -16,8 +16,6 @@
 int main(void)
 { 
     initAll();
-    initRTC();
-    srand(rtcTime);
 
     BSTree tree = create_empty_tree();
     int to_insert = 0;
