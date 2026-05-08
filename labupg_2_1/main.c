@@ -49,4 +49,5 @@ int main(void)
             uarte_write(sprintfBuffer);
         }
     }
+    printTable(&ht);
 }
