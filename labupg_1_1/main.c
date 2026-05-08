@@ -18,10 +18,6 @@
 int main(void)
 { 
     initAll();
-    nrf_systick_val_clear();
-
-    int pretime = nrf_systick_val_get();
-
 
     BSTree tree = create_empty_tree();
     int to_insert = 0;
@@ -38,7 +34,9 @@ int main(void)
             uarte_write("\n\r did not work to insert \n\r");
         }
     }
+    nrf_systick_val_clear();
 
+    int pretime = nrf_systick_val_get();
     find_BST(tree, TREESIZE);
     //efter
     int posttime = nrf_systick_val_get();
