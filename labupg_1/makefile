@@ -27,6 +27,8 @@ SRC_FILES		 += $(PROJ)/std/stdFunc.c
 SRC_FILES		 += $(PROJ)/std/list.c
 SRC_FILES		 += $(PROJ)/std/BSTree.c
 SRC_FILES		 += $(PROJ)/std/hashtable.c
+SRC_FILES		 += $(PROJ)/std/array_sort.c
+SRC_FILES		 += $(PROJ)/std/list_sort.c
 # SRC_FILES        += inte_en_riktigt_fil.c
 # Definera folders
 SRC_DIRS         := $(dir $(SRC_FILES))
