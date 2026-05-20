@@ -19,6 +19,7 @@
 #define ARRAY_SIZE2 15
 #define ARRAY_SIZE3 31
 #define ARRAY_SIZE4 63
+#define KÖR 0
 
 int main(void)
 { 
@@ -57,7 +58,7 @@ int main(void)
 
     sprintf(sprintfBuffer, "\r\n\nBubble Sort Results:\r\n");
     uarte_write(sprintfBuffer);
-    //print_list(list1);
+    print_list(list1);
 
     nrf_systick_val_clear();
     pretime = nrf_systick_val_get();
@@ -72,8 +73,10 @@ int main(void)
     sprintf(sprintfBuffer, "Bubble sort 1 took %d ticks\r\n", posttime);
     uarte_write(sprintfBuffer);
 
-    //print_list(list1);
+    print_list(list1);
 
+    if(KÖR)
+    {
     nrf_systick_val_clear();
     pretime = nrf_systick_val_get();
     list2 = bubble_sort_list(list2);
@@ -112,9 +115,11 @@ int main(void)
     uarte_write(sprintfBuffer);
     sprintf(sprintfBuffer, "Bubble sort 4 took %d ticks\r\n", posttime);
     uarte_write(sprintfBuffer);
+    }
 
     sprintf(sprintfBuffer, "\r\n\nMerge Sort Results:\r\n");
     uarte_write(sprintfBuffer);
+    
 
     int array1[ARRAY_SIZE1], array2[ARRAY_SIZE2], array3[ARRAY_SIZE3], array4[ARRAY_SIZE4];
 
@@ -128,11 +133,11 @@ int main(void)
     for (int i = 0; i < ARRAY_SIZE4; i++)
         array4[i] = rand() % 1001;
 
-    /*for (int i = 0; i < ARRAY_SIZE1; i++)
+    for (int i = 0; i < ARRAY_SIZE1; i++)
     {
         sprintf(sprintfBuffer, "\r\n%d", array1[i]);
         uarte_write(sprintfBuffer);
-    }*/
+    }
 
     nrf_systick_val_clear();
     pretime = nrf_systick_val_get();
@@ -147,12 +152,14 @@ int main(void)
     sprintf(sprintfBuffer, "Merge sort 1 took %d ticks\r\n", posttime);
     uarte_write(sprintfBuffer);
 
-    /*for (int i = 0; i < ARRAY_SIZE1; i++)
+    for (int i = 0; i < ARRAY_SIZE1; i++)
     {
         sprintf(sprintfBuffer, "\r\n%d", array1[i]);
         uarte_write(sprintfBuffer);
-    }*/
+    }
 
+    if(KÖR)
+    {
     nrf_systick_val_clear();
     pretime = nrf_systick_val_get();
     merge_sort(array2, ARRAY_SIZE2);
@@ -191,7 +198,7 @@ int main(void)
     uarte_write(sprintfBuffer);
     sprintf(sprintfBuffer, "Merge sort 4 took %d ticks\r\n", posttime);
     uarte_write(sprintfBuffer);
-
+    }
     //quick sort
 
     sprintf(sprintfBuffer, "\r\n\nQuick Sort Results:\r\n");
@@ -206,11 +213,11 @@ int main(void)
     for (int i = 0; i < ARRAY_SIZE4; i++)
         array4[i] = rand() % 1001;
 
-    /*for (int i = 0; i < ARRAY_SIZE1; i++)
+    for (int i = 0; i < ARRAY_SIZE1; i++)
     {
         sprintf(sprintfBuffer, "\r\n%d", array1[i]);
         uarte_write(sprintfBuffer);
-    }*/
+    }
 
     
     nrf_systick_val_clear();
@@ -226,12 +233,14 @@ int main(void)
     sprintf(sprintfBuffer, "Quick sort 1 took %d ticks\r\n", posttime);
     uarte_write(sprintfBuffer);
 
-    /*for (int i = 0; i < ARRAY_SIZE1; i++)
+    for (int i = 0; i < ARRAY_SIZE1; i++)
     {
         sprintf(sprintfBuffer, "\r\n%d", array1[i]);
         uarte_write(sprintfBuffer);
-    }*/
+    }
 
+    if(KÖR)
+    {
     nrf_systick_val_clear();
     pretime = nrf_systick_val_get();
     quick_sort(array2, ARRAY_SIZE2);
@@ -270,4 +279,5 @@ int main(void)
     uarte_write(sprintfBuffer);
     sprintf(sprintfBuffer, "Quick sort 4 took %d ticks\r\n", posttime);
     uarte_write(sprintfBuffer);
+    }
 }
