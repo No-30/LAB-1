@@ -28,7 +28,8 @@ SRC_FILES		 += $(PROJ)/drivers/src/nrfx_rtc.c
 # SRC_FILES		 += $(PROJ)/std/BSTree.c
 # SRC_FILES		 += $(PROJ)/std/hashtable.c
 SRC_FILES		 += $(PROJ)/std/Guacamole.c
-SRC_FILES		 += $(PROJ)/std/button_adc.c
+SRC_FILES		 += $(PROJ)/std/nrfx_timer.c
+# SRC_FILES		 += $(PROJ)/std/button_adc.c
 # SRC_FILES        += inte_en_riktigt_fil.c
 # Definera folders
 SRC_DIRS         := $(dir $(SRC_FILES))
@@ -54,6 +55,9 @@ CFLAGS           += -std=c99 -MP -MD -c -g3 $(OPTIMISE)
 CFLAGS           += -DBOARD_CUSTOM -DBSP_DEFINES_ONLY -DCONFIG_GPIO_AS_PINRESET -DFLOAT_ABI_HARD -DNRF5340_XXAA_APPLICATION
 CFLAGS           += -mcpu=cortex-m33 -mthumb -mabi=aapcs -Wall -mfloat-abi=hard -mfpu=fpv5-sp-d16 -ffunction-sections -fdata-sections
 CFLAGS           += -fno-strict-aliasing -fno-builtin -fshort-enums -D__HEAP_SIZE=$(HEAP_SIZE) -D__STACK_SIZE=$(STACK_SIZE)
+CFLAGS 			 += -Wall -Werror -DNRFX_TIMER_ENABLED=1 -DNRFX_TIMER0_ENABLED=1
+CFLAGS 			 := $(filter-out -Werror,$(CFLAGS))
+
 
 LNFLAGS          += -O3 -g3 -mthumb -mabi=aapcs -L$(PROJ)/mdk -T$(LINKER_SCRIPT) -mcpu=cortex-m33 -mfloat-abi=hard -mfpu=fpv5-sp-d16
 LNFLAGS          += -Wl,--gc-sections  --specs=nano.specs

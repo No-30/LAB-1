@@ -11,6 +11,11 @@
 #include <Guacamole.h>
 #include <stdio.h>
 
+void on_input(char c)
+{
+    handle_input(c);
+}
+
 int main(void)
 { 
     initAll_Mod();
