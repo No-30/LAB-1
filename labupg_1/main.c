@@ -31,6 +31,8 @@ int main(void)
     List list3 = create_empty_list();
     List list4 = create_empty_list();
 
+
+
     int data;
     for (int i = 0; i < ARRAY_SIZE1; i++)
     {
@@ -55,7 +57,6 @@ int main(void)
         data = rand() % 1001;
         add_last(&list4, data);
     }
-
     sprintf(sprintfBuffer, "\r\n\nBubble Sort Results:\r\n");
     uarte_write(sprintfBuffer);
     print_list(list1);
@@ -64,6 +65,7 @@ int main(void)
     pretime = nrf_systick_val_get();
     list1 = bubble_sort_list(list1);
     posttime = nrf_systick_val_get();
+
     posttime = pretime - posttime;
     if(is_sorted_list(list1))
         sprintf(sprintfBuffer, "\r\nBubble sort 1 is sorted\r\n");
@@ -74,7 +76,7 @@ int main(void)
     uarte_write(sprintfBuffer);
 
     print_list(list1);
-
+// if(KÖR){
     if(KÖR)
     {
     nrf_systick_val_clear();
@@ -280,4 +282,6 @@ int main(void)
     sprintf(sprintfBuffer, "Quick sort 4 took %d ticks\r\n", posttime);
     uarte_write(sprintfBuffer);
     }
+
+//}
 }
