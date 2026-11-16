@@ -1465,7 +1465,7 @@
  * Boolean. Accepted values 0 and 1.
  */
 #ifndef NRFX_UARTE1_ENABLED
-#define NRFX_UARTE1_ENABLED 0
+#define NRFX_UARTE1_ENABLED 1
 #endif
 
 /**
