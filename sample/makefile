@@ -76,7 +76,7 @@ jflash: $(BUILD_DIR)/$(TARGET)
 	nrfjprog --program $(BUILD_DIR)/$(HEXFILE) --sectorerase
 	nrfjprog --reset
 
-.PHONY: clean jflash cf
+#.PHONY: clean jflash cf
 
 jflash: $(BUILD_DIR)/$(TARGET)
 	@echo Flashing $(HEXFILE)
@@ -87,6 +87,6 @@ clean:
 	@echo cleaning build directory
 	del /S /q ..\..\build\*
 
-cf:
-	clean
+cf: 
+	$(MAKE) clean
 	$(MAKE) jflash

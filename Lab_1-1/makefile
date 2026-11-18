@@ -82,6 +82,6 @@ clean:
 	@echo cleaning build directory
 	del /S /q ..\..\build\*
 
-cf:
-	clean
+cf: 
+	$(MAKE) clean
 	$(MAKE) jflash
