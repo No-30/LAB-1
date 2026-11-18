@@ -24,9 +24,6 @@ SRC_FILES        += main.c
 SRC_FILES		 += $(PROJ)/drivers/src/nrfx_systick.c
 SRC_FILES		 += $(PROJ)/drivers/src/nrfx_rtc.c
 SRC_FILES		 += $(PROJ)/std/stdFunc.c
-SRC_FILES		 += $(PROJ)/std/list.c
-SRC_FILES		 += $(PROJ)/std/BSTree.c
-SRC_FILES		 += $(PROJ)/std/hashtable.c
 # SRC_FILES        += inte_en_riktigt_fil.c
 # Definera folders
 SRC_DIRS         := $(dir $(SRC_FILES))
@@ -79,6 +76,17 @@ jflash: $(BUILD_DIR)/$(TARGET)
 	nrfjprog --program $(BUILD_DIR)/$(HEXFILE) --sectorerase
 	nrfjprog --reset
 
+#.PHONY: clean jflash cf
+
+jflash: $(BUILD_DIR)/$(TARGET)
+	@echo Flashing $(HEXFILE)
+	nrfjprog --program $(BUILD_DIR)/$(HEXFILE) --sectorerase
+	nrfjprog --reset
+
 clean:
 	@echo cleaning build directory
 	del /S /q ..\..\build\*
+
+cf: 
+	$(MAKE) clean
+	$(MAKE) jflash

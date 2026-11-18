@@ -9,9 +9,6 @@
 #include <nrfx_systick.h>
 #include <nrf_gpio.h>
 #include <stdHeader.h>
-#include <list.h>
-#include <BSTree.h>
-#include <hashtable.h>
 
 int main(void)
 { 
