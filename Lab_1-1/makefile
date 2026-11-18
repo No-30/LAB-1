@@ -71,6 +71,8 @@ $(BUILD_DIR)/%.S.o: %.S
 	@echo Assembling $<
 	@$(GCC) $(CFLAGS) -o $@ $<
 
+.PHONY: clean jflash cf
+
 jflash: $(BUILD_DIR)/$(TARGET)
 	@echo Flashing $(HEXFILE)
 	nrfjprog --program $(BUILD_DIR)/$(HEXFILE) --sectorerase
@@ -80,8 +82,6 @@ clean:
 	@echo cleaning build directory
 	del /S /q ..\..\build\*
 
-.PHONY: clean jflash cf
-
 cf:
 	clean
-	jflash
+	$(MAKE) jflash
