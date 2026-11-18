@@ -79,3 +79,9 @@ jflash: $(BUILD_DIR)/$(TARGET)
 clean:
 	@echo cleaning build directory
 	del /S /q ..\..\build\*
+
+.PHONY: clean jflash cf
+
+cf:
+	clean
+	jflash
