@@ -16,4 +16,11 @@
 int main(void)
 { 
     initAll();
+
+    sprintf(sprintfBuffer, "\n\r skriv något: ");
+    uarte_write(sprintfBuffer, 0);
+    readString(string, STRING_LENGTH, 0);   
+
+    sprintf(sprintfBuffer, "\n\r du skrev: %s", string);
+    uarte_write(sprintfBuffer, 0);
 }
