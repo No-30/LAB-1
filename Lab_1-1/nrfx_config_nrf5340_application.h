@@ -946,7 +946,7 @@
  * Boolean. Accepted values 0 and 1.
  */
 #ifndef NRFX_RTC1_ENABLED
-#define NRFX_RTC1_ENABLED 0
+#define NRFX_RTC1_ENABLED 1
 #endif
 
 /**
