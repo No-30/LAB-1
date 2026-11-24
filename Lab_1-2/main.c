@@ -10,6 +10,9 @@
 #include <nrf_gpio.h>
 #include <stdHeader.h>
 
+#define BAUDRATE 115200
+#define BBUART_TX 38 //P1.06 närmast skärmkontakten
+
 int main(void)
 {
     char echoBuffer[2];
@@ -17,19 +20,21 @@ int main(void)
     initAll();
     sprintf(sprintfBuffer, "\n\rEcho test\n\r");
     uarte_write(sprintfBuffer, 0);
-    uarte_write(sprintfBuffer, 1);
+    //uarte_write(sprintfBuffer, 1);
+    //uart_bb_tx(BBUART_TX, '\r', BAUDRATE);
+    //uart_bb_tx(BBUART_TX, '\n', BAUDRATE);
 
-    while (1)
+    while(1)
     {
         if (uarte0ByteReady)
         {
             uarte0ByteReady = false;
             echoBuffer[0] = uarte0Byte;
             echoBuffer[1] = '\0';
-            uarte_write(echoBuffer, 1);
+            uart_bb_tx(BBUART_TX, echoBuffer[0], BAUDRATE);
+            //uarte_write(echoBuffer, 1);
             while (nrfx_uarte_tx_in_progress(&instance1)) {}
         }
-
         if (uarte1ByteReady)
         {
             uarte1ByteReady = false;

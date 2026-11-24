@@ -9,39 +9,34 @@
 #include <nrfx_systick.h>
 #include <nrf_gpio.h>
 #include <stdHeader.h>
-#include <list.h>
-#include <BSTree.h>
-#include <hashtable.h>
 
 int main(void)
 {
-    char gridBuffer[512];
-    nrfx_systick_state_t refreshTimer;
+    char echoBuffer[2];
 
     initAll();
-    interrupt_grid_reset();
-    nrfx_systick_get(&refreshTimer);
+    sprintf(sprintfBuffer, "\n\rEcho test\n\r");
+    uarte_write(sprintfBuffer, 0);
+    uarte_write(sprintfBuffer, 1);
 
-    while (!interrupt_grid_is_finished())
+    while (1)
     {
-        if (uarteKeyReady)
+        if (uarte0ByteReady)
         {
-            uarteKeyReady = false;
-            interrupt_grid_handle_key(uarteKey);
+            uarte0ByteReady = false;
+            echoBuffer[0] = uarte0Byte;
+            echoBuffer[1] = '\0';
+            uarte_write(echoBuffer, 1);
+            while (nrfx_uarte_tx_in_progress(&instance1)) {}
         }
 
-        if (nrfx_systick_test(&refreshTimer, 250000))
+        if (uarte1ByteReady)
         {
-            nrfx_systick_get(&refreshTimer);
-            if (interrupt_grid_render(gridBuffer, sizeof(gridBuffer)) > 0)
-            {
-                uarte_write(gridBuffer, 0);
-                while (nrfx_uarte_tx_in_progress(&instance0)) {}
-            }
+            uarte1ByteReady = false;
+            echoBuffer[0] = uarte1Byte;
+            echoBuffer[1] = '\0';
+            uarte_write(echoBuffer, 0);
+            while (nrfx_uarte_tx_in_progress(&instance0)) {}
         }
     }
-
-    uarte_write("\r\nProgram finished.\r\n", 0);
-    while (nrfx_uarte_tx_in_progress(&instance0)) {}
-    return 0;
 }
